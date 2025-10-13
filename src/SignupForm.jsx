@@ -103,18 +103,24 @@ export default function SignupForm({ onSignup }) {
           {showPassword ? '🙈' : '👁️'}
         </span>
       </div>
-      {passwordFocused && <PasswordRequirements password={password} />}
-      <div style={{ position: 'relative', width: '100%', marginBottom: 16 }}>
-        <input
-          type={showPassword ? 'text' : 'password'}
-          placeholder="비밀번호 확인"
-          value={passwordConfirm}
-          onChange={e => setPasswordConfirm(e.target.value)}
-          required
-          disabled={!password}
-          style={{ width: '100%', padding: 8, paddingRight: 40 }}
-        />
-      </div>
+      {passwordFocused && (
+        <>
+          <PasswordRequirements password={password} />
+          <div style={{ position: 'relative', width: '100%', marginBottom: 16, marginTop: 8 }}>
+            <input
+              type={showPassword ? 'text' : 'password'}
+              placeholder="비밀번호 확인"
+              value={passwordConfirm}
+              onChange={e => setPasswordConfirm(e.target.value)}
+              required
+              style={{ width: '100%', padding: 8, paddingRight: 40 }}
+            />
+            <span onClick={() => setShowPassword(!showPassword)} style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', cursor: 'pointer' }}>
+              {showPassword ? '🙈' : '👁️'}
+            </span>
+          </div>
+        </>
+      )}
       {passwordConfirm && !passwordsMatch && (
         <div style={{ color: 'red', fontSize: 12, marginTop: -8, marginBottom: 8 }}>
           비밀번호가 일치하지 않습니다.
