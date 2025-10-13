@@ -27,14 +27,21 @@ export default function SignupForm({ onSignup }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [passwordFocused, setPasswordFocused] = useState(false);
   const navigate = useNavigate();
 
+  const passwordsMatch = password && password === passwordConfirm;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!passwordsMatch) {
+      setError('비밀번호가 일치하지 않습니다.');
+      return;
+    }
     setLoading(true);
     setError('');
 
@@ -97,7 +104,23 @@ export default function SignupForm({ onSignup }) {
         </span>
       </div>
       {passwordFocused && <PasswordRequirements password={password} />}
-      <button className="button button-strong" type="submit" disabled={loading} style={{ width: '100%', marginTop: 16 }}>회원가입</button>
+      <div style={{ position: 'relative', width: '100%', marginBottom: 16 }}>
+        <input
+          type={showPassword ? 'text' : 'password'}
+          placeholder="비밀번호 확인"
+          value={passwordConfirm}
+          onChange={e => setPasswordConfirm(e.target.value)}
+          required
+          disabled={!password}
+          style={{ width: '100%', padding: 8, paddingRight: 40 }}
+        />
+      </div>
+      {passwordConfirm && !passwordsMatch && (
+        <div style={{ color: 'red', fontSize: 12, marginTop: -8, marginBottom: 8 }}>
+          비밀번호가 일치하지 않습니다.
+        </div>
+      )}
+      <button className="button button-strong" type="submit" disabled={loading || !passwordsMatch} style={{ width: '100%', marginTop: 16 }}>회원가입</button>
       {error && <div style={{ color: 'red', marginTop: 12 }}>{error}</div>}
     </form>
   );
