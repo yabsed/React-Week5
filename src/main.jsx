@@ -25,7 +25,8 @@ function AppLayout() {
   };
 
   const handleSignup = () => {
-    navigate('/React-Week5/signup');
+    setIsLoggedIn(true);
+    navigate('/React-Week5/profile');
   };
 
   return (
