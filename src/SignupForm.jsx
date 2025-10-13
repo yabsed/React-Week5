@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const BASE_URL = 'https://api-internhasha.wafflestudio.com';
 
@@ -28,17 +29,14 @@ export default function SignupForm({ onSignup }) {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [requestPayload, setRequestPayload] = useState(null);
-  const [responseMessage, setResponseMessage] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [passwordFocused, setPasswordFocused] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
-    setResponseMessage('');
-    setRequestPayload(null);
 
     try {
       const payload = {
@@ -51,7 +49,6 @@ export default function SignupForm({ onSignup }) {
           successCode: '1234',
         },
       };
-      setRequestPayload(payload);
 
       const res = await fetch(`${BASE_URL}/api/auth/user`, {
         method: 'POST',
@@ -60,12 +57,12 @@ export default function SignupForm({ onSignup }) {
       });
 
       if (res.ok) {
-        const text = await res.text();
-        setResponseMessage(text);
+        const data = await res.json();
+        localStorage.setItem('token', data.token);
         onSignup && onSignup();
+        navigate('/React-Week5/profile');
       } else {
         const errorData = await res.json();
-        setResponseMessage(JSON.stringify(errorData, null, 2));
         if (errorData.details) {
           const errorMessages = Object.values(errorData.details).join(' ');
           setError(errorMessages);
@@ -102,18 +99,6 @@ export default function SignupForm({ onSignup }) {
       {passwordFocused && <PasswordRequirements password={password} />}
       <button className="button button-strong" type="submit" disabled={loading} style={{ width: '100%', marginTop: 16 }}>회원가입</button>
       {error && <div style={{ color: 'red', marginTop: 12 }}>{error}</div>}
-      {requestPayload && (
-        <div style={{ marginTop: 16, fontSize: 13, color: '#555', wordBreak: 'break-all' }}>
-          <b>보낸 데이터:</b>
-          <pre style={{ background: '#f6f6f6', padding: 8, borderRadius: 4 }}>{JSON.stringify(requestPayload, null, 2)}</pre>
-        </div>
-      )}
-      {responseMessage && (
-        <div style={{ marginTop: 8, fontSize: 13, color: '#555', wordBreak: 'break-all' }}>
-          <b>받은 메시지:</b>
-          <pre style={{ background: '#f6f6f6', padding: 8, borderRadius: 4 }}>{responseMessage}</pre>
-        </div>
-      )}
     </form>
   );
 }

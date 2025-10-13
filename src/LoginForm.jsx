@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const BASE_URL = 'https://api-internhasha.wafflestudio.com';
 
@@ -7,6 +8,7 @@ export default function LoginForm({ onLogin }) {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,6 +24,7 @@ export default function LoginForm({ onLogin }) {
       const data = await res.json();
       localStorage.setItem('token', data.token);
       onLogin && onLogin();
+      navigate('/React-Week5/profile');
     } catch (err) {
       setError('이메일 또는 비밀번호가 올바르지 않습니다.');
     } finally {
