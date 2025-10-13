@@ -12,12 +12,12 @@ function AuthNav({ isLoggedIn, onLogout }) {
       <nav className="auth-nav" style={{ display: 'flex', gap: 16, justifyContent: 'flex-end', padding: 16 }}>
         {!isLoggedIn ? (
           <>
-            <Link className="button button-strong" to="/login">로그인</Link>
-            <Link className="button button-strong" to="/signup">회원가입</Link>
+            <Link className="button button-strong" to="/React-Week5/login">로그인</Link>
+            <Link className="button button-strong" to="/React-Week5/signup">회원가입</Link>
           </>
         ) : (
           <>
-            <Link className="button button-strong" to="/profile">내 정보</Link>
+            <Link className="button button-strong" to="/React-Week5/profile">내 정보</Link>
             <button className="button button-strong" onClick={onLogout}>로그아웃</button>
           </>
         )}

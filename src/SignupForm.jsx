@@ -1,16 +1,37 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const BASE_URL = 'https://api-internhasha.wafflestudio.com';
+
+const PasswordRequirements = ({ password }) => {
+  const checks = {
+    length: password.length >= 8,
+    number: /\d/.test(password),
+    case: /[a-z]/.test(password) && /[A-Z]/.test(password),
+    special: /[!@#$%^&*(),.?":{}|<>]/.test(password),
+    consecutive: !/(.)\1{2,}/.test(password) && !/abc|bcd|cde|def|efg|fgh|ghi|hij|ijk|jkl|klm|lmn|mno|nop|opq|pqr|qrs|rst|stu|tuv|uvw|vwx|wxy|xyz|012|123|234|345|456|567|678|789/.test(password.toLowerCase()),
+  };
+
+  return (
+    <div style={{ marginTop: 8, fontSize: 12, color: '#555' }}>
+      <div>{checks.length ? '✓' : '✗'} 8자리 이상</div>
+      <div>{checks.number ? '✓' : '✗'} 숫자 포함</div>
+      <div>{checks.case ? '✓' : '✗'} 영문 대소문자 포함</div>
+      <div>{checks.special ? '✓' : '✗'} 특수문자 포함</div>
+      <div>{checks.consecutive ? '✓' : '✗'} 연속된 문자열이나 숫자 없음</div>
+    </div>
+  );
+};
 
 export default function SignupForm({ onSignup }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [successCode, setSuccessCode] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [requestPayload, setRequestPayload] = useState(null);
   const [responseMessage, setResponseMessage] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [passwordFocused, setPasswordFocused] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,7 +48,7 @@ export default function SignupForm({ onSignup }) {
           name,
           email,
           password,
-          successCode: successCode || '1234',
+          successCode: '1234',
         },
       };
       setRequestPayload(payload);
@@ -64,9 +85,22 @@ export default function SignupForm({ onSignup }) {
       <h2 className="section-title">회원가입</h2>
       <input type="text" placeholder="이름" value={name} onChange={e => setName(e.target.value)} required style={{ width: '100%', marginBottom: 16, padding: 8 }} />
       <input type="email" placeholder="이메일" value={email} onChange={e => setEmail(e.target.value)} required style={{ width: '100%', marginBottom: 16, padding: 8 }} />
-      <input type="password" placeholder="비밀번호" value={password} onChange={e => setPassword(e.target.value)} required style={{ width: '100%', marginBottom: 16, padding: 8 }} />
-      <input type="text" placeholder="successCode (아무 값)" value={successCode} onChange={e => setSuccessCode(e.target.value)} style={{ width: '100%', marginBottom: 16, padding: 8 }} />
-      <button className="button button-strong" type="submit" disabled={loading} style={{ width: '100%' }}>회원가입</button>
+      <div style={{ position: 'relative', width: '100%', marginBottom: 16 }}>
+        <input
+          type={showPassword ? 'text' : 'password'}
+          placeholder="비밀번호"
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+          onFocus={() => setPasswordFocused(true)}
+          required
+          style={{ width: '100%', padding: 8, paddingRight: 40 }}
+        />
+        <span onClick={() => setShowPassword(!showPassword)} style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', cursor: 'pointer' }}>
+          {showPassword ? '🙈' : '👁️'}
+        </span>
+      </div>
+      {passwordFocused && <PasswordRequirements password={password} />}
+      <button className="button button-strong" type="submit" disabled={loading} style={{ width: '100%', marginTop: 16 }}>회원가입</button>
       {error && <div style={{ color: 'red', marginTop: 12 }}>{error}</div>}
       {requestPayload && (
         <div style={{ marginTop: 16, fontSize: 13, color: '#555', wordBreak: 'break-all' }}>

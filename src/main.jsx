@@ -16,25 +16,25 @@ function AppLayout() {
   const handleLogout = () => {
     setIsLoggedIn(false);
     localStorage.removeItem('token');
-    navigate('/login');
+    navigate('/React-Week5/login');
   };
 
   const handleLogin = () => {
     setIsLoggedIn(true);
-    navigate('/profile');
+    navigate('/React-Week5/profile');
   };
 
   const handleSignup = () => {
-    navigate('/login');
+    navigate('/React-Week5/signup');
   };
 
   return (
     <div>
       <AuthNav isLoggedIn={isLoggedIn} onLogout={handleLogout} />
       <Routes>
-        <Route path="/login" element={<LoginForm onLogin={handleLogin} />} />
-        <Route path="/signup" element={<SignupForm onSignup={handleSignup} />} />
-        <Route path="/profile" element={isLoggedIn ? <ProfileInfo /> : <div style={{padding: 32}}><h2>로그인이 필요합니다</h2></div>} />
+        <Route path="/React-Week5/login" element={<LoginForm onLogin={handleLogin} />} />
+        <Route path="/React-Week5/signup" element={<SignupForm onSignup={handleSignup} />} />
+        <Route path="/React-Week5/profile" element={isLoggedIn ? <ProfileInfo /> : <div style={{padding: 32}}><h2>로그인이 필요합니다</h2></div>} />
       </Routes>
     </div>
   );
