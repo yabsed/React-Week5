@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import LoginRequiredModal from './LoginRequiredModal';
 
 const BASE_URL = 'https://api-internhasha.wafflestudio.com';
 
@@ -14,6 +15,7 @@ function PostCard({ post }) {
   const [imageError, setImageError] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(post.isBookmarked || false);
   const [isBookmarking, setIsBookmarking] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
   const navigate = useNavigate();
 
   // post.isBookmarked가 변경되면 로컬 상태도 업데이트
@@ -36,10 +38,9 @@ function PostCard({ post }) {
     
     const token = localStorage.getItem('token');
     
-    // 로그인 되어있지 않으면 로그인 페이지로 이동
+    // 로그인 되어있지 않으면 모달 표시
     if (!token) {
-      alert('로그인이 필요한 기능입니다.');
-      navigate('/React-Week5/login');
+      setShowLoginModal(true);
       return;
     }
 
@@ -61,9 +62,8 @@ function PostCard({ post }) {
       if (response.ok) {
         setIsBookmarked(!isBookmarked);
       } else if (response.status === 401) {
-        alert('로그인이 만료되었습니다. 다시 로그인해주세요.');
         localStorage.removeItem('token');
-        navigate('/React-Week5/login');
+        setShowLoginModal(true);
       } else {
         throw new Error('북마크 처리에 실패했습니다.');
       }
@@ -76,8 +76,13 @@ function PostCard({ post }) {
   };
 
   return (
-    // Link 컴포넌트로 카드 전체를 감싸 클릭 가능하게 만듭니다.
-    <Link to={postDetailUrl} className="post-card">
+    <>
+      <LoginRequiredModal 
+        isOpen={showLoginModal} 
+        onClose={() => setShowLoginModal(false)} 
+      />
+      {/* Link 컴포넌트로 카드 전체를 감싸 클릭 가능하게 만듭니다. */}
+      <Link to={postDetailUrl} className="post-card">
       <div className="card-content">
         <div className="card-header">
           <div className="profile-image-wrapper">
@@ -112,6 +117,7 @@ function PostCard({ post }) {
         </div>
       </div>
     </Link>
+    </>
   );
 }
 

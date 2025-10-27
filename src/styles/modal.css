@@ -1,0 +1,103 @@
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 40px 32px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.3s ease;
+  text-align: center;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Modal Title */
+.modal-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #212529;
+  margin: 0 0 24px 0;
+  line-height: 1.4;
+}
+
+/* Modal Subtitle */
+.modal-subtitle {
+  font-size: 0.95rem;
+  color: #6c757d;
+  margin: 4px 0;
+  line-height: 1.5;
+}
+
+/* Modal Buttons */
+.modal-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.modal-button {
+  width: 100%;
+  padding: 16px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modal-button.primary {
+  background-color: #495057;
+  color: #ffffff;
+}
+
+.modal-button.primary:hover {
+  background-color: #343a40;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(73, 80, 87, 0.3);
+}
+
+.modal-button.secondary {
+  background-color: #f1f3f5;
+  color: #495057;
+}
+
+.modal-button.secondary:hover {
+  background-color: #e9ecef;
+  transform: translateY(-1px);
+}
