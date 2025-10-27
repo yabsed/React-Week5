@@ -20,11 +20,16 @@ export default function ProfileInfo() {
       }
     })
       .then(res => {
+        if (res.status === 401) {
+          // 토큰이 만료된 경우
+          localStorage.removeItem('token');
+          throw new Error('로그인이 만료되었습니다. 다시 로그인해주세요.');
+        }
         if (!res.ok) throw new Error('유저 정보 불러오기 실패');
         return res.json();
       })
       .then(data => setUser(data))
-      .catch(() => setError('유저 정보 불러오기 실패'))
+      .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
   }, []);
 

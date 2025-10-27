@@ -61,6 +61,12 @@ export function usePosts(selectedRoles, selectedDomains, isActive, order, page) 
     
     fetch(apiUrl, { headers })
       .then(res => {
+        if (res.status === 401) {
+          // 토큰이 만료된 경우
+          localStorage.removeItem('token');
+          window.location.reload(); // 페이지 새로고침하여 로그아웃 상태 반영
+          throw new Error('로그인이 만료되었습니다. 다시 로그인해주세요.');
+        }
         if (!res.ok) {
           throw new Error('데이터를 불러오는 데 실패했습니다.');
         }
