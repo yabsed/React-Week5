@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import "./styles/common.css"; // 공통 CSS
 import "./styles/postlist.css"; // 이 컴포넌트 전용 CSS
 import PostCard from "./components/PostCard";
@@ -11,7 +12,21 @@ import { useJobFilter } from "./hooks/useJobFilter";
  * 포스트 목록을 불러와서 그리드 형태로 보여주는 컴포넌트
  */
 function PostList() {
-  const [page, setPage] = useState(1);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const page = parseInt(searchParams.get("page") || "0", 10);
+
+  useEffect(() => {
+    const currentParams = Object.fromEntries(searchParams.entries());
+    if (!currentParams.page) {
+      navigate(`?page=0`, { replace: true });
+    }
+  }, [searchParams, navigate]);
+
+  const setPage = (newPage) => {
+    const currentParams = Object.fromEntries(searchParams.entries());
+    setSearchParams({ ...currentParams, page: newPage });
+  };
   // 직무 필터 관련 상태와 핸들러
   const {
     selectedRoles,
@@ -45,19 +60,49 @@ function PostList() {
       return null;
     }
 
-    const pages = [];
-    for (let i = 0; i < paginator.lastPage; i++) {
-      pages.push(
-        <button
-          key={i}
-          onClick={() => setPage(i)}
-          className={page === i ? "active" : ""}
+    const startPage = Math.floor(page / 5) * 5;
+    const endPage = startPage + 5;
+
+    // 이전 버튼 - 현재 페이지가 0보다 크면 활성화
+    const hasPrev = page > 0;
+    
+    // 다음 버튼 - 현재 페이지가 마지막 페이지보다 작으면 활성화
+    const hasNext = page < paginator.lastPage - 1;
+
+    return (
+      <div className="pagination">
+        <button 
+          onClick={() => hasPrev && setPage(page - 1)}
+          disabled={!hasPrev}
+          className="pagination-nav"
         >
-          {i}
+          &lt; 이전
         </button>
-      );
-    }
-    return <div className="pagination">{pages}</div>;
+        
+        {Array.from({ length: 5 }, (_, i) => {
+          const pageNum = startPage + i;
+          const isDisabled = pageNum >= paginator.lastPage;
+          return (
+            <button
+              key={pageNum}
+              onClick={() => !isDisabled && setPage(pageNum)}
+              className={`pagination-number ${page === pageNum ? "active" : ""} ${isDisabled ? "disabled" : ""}`}
+              disabled={isDisabled}
+            >
+              {pageNum + 1}
+            </button>
+          );
+        })}
+
+        <button 
+          onClick={() => hasNext && setPage(page + 1)}
+          disabled={!hasNext}
+          className="pagination-nav"
+        >
+          다음 &gt;
+        </button>
+      </div>
+    );
   }
 
   return (

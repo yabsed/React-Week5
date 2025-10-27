@@ -115,6 +115,14 @@ export function useJobFilter() {
 
   // 전체 초기화 핸들러 (모집상태, 도메인, 정렬만 초기화, 직군은 유지)
   const handleResetFilters = () => {
+    // 변경사항이 있는지 확인
+    const hasChanges = selectedDomains.length > 0 || isActive !== null || order !== 0;
+    
+    // 변경사항이 없으면 아무것도 하지 않음
+    if (!hasChanges) {
+      return;
+    }
+    
     // 모든 도메인 선택 해제
     setSelectedDomains([]);
     // 모집상태를 전체로
@@ -122,8 +130,22 @@ export function useJobFilter() {
     // 정렬을 최신순으로
     setOrder(0);
     
-    // URL 업데이트 (roles는 유지)
-    updateSearchParams(selectedRoles, [], null, 0);
+    // URL 업데이트 (roles와 page는 유지)
+    const currentPage = searchParams.get('page');
+    const params = new URLSearchParams();
+    
+    // roles 유지
+    selectedRoles.forEach(role => params.append('roles', role));
+    
+    // order 초기값 추가
+    params.set('order', '0');
+    
+    // 현재 페이지 유지
+    if (currentPage) {
+      params.set('page', currentPage);
+    }
+    
+    setSearchParams(params);
   };
 
   return {
