@@ -33,12 +33,13 @@ export default function LoginForm({ onLogin }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="card" style={{ maxWidth: 400, margin: '40px auto', padding: 32 }}>
-      <h2 className="section-title">로그인</h2>
-      <input type="email" placeholder="이메일" value={email} onChange={e => setEmail(e.target.value)} required style={{ width: '100%', marginBottom: 16, padding: 8 }} />
-      <input type="password" placeholder="비밀번호" value={password} onChange={e => setPassword(e.target.value)} required style={{ width: '100%', marginBottom: 16, padding: 8 }} />
-      <button className="button button-strong" type="submit" disabled={loading} style={{ width: '100%' }}>로그인</button>
-      {error && <div style={{ color: 'red', marginTop: 12 }}>{error}</div>}
+    <form onSubmit={handleSubmit} className="card form-card">
+      <h2 className="section-title">
+        로그인</h2>
+      <input className="form-input" type="email" placeholder="이메일" value={email} onChange={e => setEmail(e.target.value)} required />
+      <input className="form-input" type="password" placeholder="비밀번호" value={password} onChange={e => setPassword(e.target.value)} required />
+      <button className="button button-strong full-width-button" type="submit" disabled={loading}>로그인</button>
+      {error && <div className="form-error">{error}</div>}
     </form>
   );
 }

@@ -8,8 +8,7 @@ function AuthNav({ isLoggedIn, onLogout }) {
   const navigate = useNavigate();
   return (
     <>
-      {/* 우측 네비게이션 */}
-      <nav className="auth-nav" style={{ display: 'flex', gap: 16, justifyContent: 'flex-end', padding: 16 }}>
+      <nav className="auth-nav">
         {!isLoggedIn ? (
           <>
             <Link className="button button-strong" to="/React-Week5/login">로그인</Link>

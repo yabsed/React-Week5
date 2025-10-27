@@ -35,7 +35,7 @@ function AppLayout() {
       <Routes>
         <Route path="/React-Week5/login" element={<LoginForm onLogin={handleLogin} />} />
         <Route path="/React-Week5/signup" element={<SignupForm onSignup={handleSignup} />} />
-        <Route path="/React-Week5/profile" element={isLoggedIn ? <ProfileInfo /> : <div style={{padding: 32}}><h2>로그인이 필요합니다</h2></div>} />
+        <Route path="/React-Week5/profile" element={isLoggedIn ? <ProfileInfo /> : <div className="page-padding"><h2>로그인이 필요합니다</h2></div>} />
       </Routes>
     </div>
   );

@@ -29,15 +29,15 @@ export default function ProfileInfo() {
   }, []);
 
   if (loading) return <div className="loading">불러오는 중...</div>;
-  if (error) return <div className="card" style={{ maxWidth: 400, margin: '40px auto', padding: 32, color: 'red' }}>{error}</div>;
+  if (error) return <div className="card form-card form-error">{error}</div>;
   if (!user) return null;
 
   return (
-    <div className="card" style={{ maxWidth: 400, margin: '40px auto', padding: 32 }}>
+    <div className="card form-card">
       <h2 className="section-title">내 정보</h2>
-      <div style={{ fontSize: 20, marginBottom: 12 }}><b>이름:</b> {user.name}</div>
-      <div style={{ fontSize: 20, marginBottom: 12 }}><b>이메일:</b> {user.email}</div>
-      <div style={{ fontSize: 16, color: '#888' }}><b>가입일:</b> {new Date(user.createdAt).toLocaleString()}</div>
+      <div className="info-line"><b>이름:</b> {user.name}</div>
+      <div className="info-line"><b>이메일:</b> {user.email}</div>
+      <div className="muted"><b>가입일:</b> {new Date(user.createdAt).toLocaleString()}</div>
     </div>
   );
 }

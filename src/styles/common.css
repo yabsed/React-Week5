@@ -186,3 +186,85 @@ body {
   font-size: var(--font-size-lg);
   margin-right: var(--spacing-xs);
 }
+
+/* Extracted form and layout utilities */
+.auth-nav {
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: flex-end;
+  padding: var(--spacing-md);
+}
+
+.form-card {
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 32px;
+}
+
+.form-input {
+  width: 100%;
+  margin-bottom: 16px;
+  padding: 8px;
+  font-size: var(--font-size-md);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: transparent;
+}
+
+.input-wrapper {
+  position: relative;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.input-with-icon {
+  padding-right: 40px;
+}
+
+.icon-right {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.full-width-button {
+  width: 100%;
+}
+
+.form-error {
+  color: red;
+  margin-top: 12px;
+}
+
+.form-error-small {
+  color: red;
+  font-size: 12px;
+  margin-top: -8px;
+  margin-bottom: 8px;
+}
+
+.password-requirements {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #555;
+}
+
+.info-line {
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+
+.muted {
+  font-size: 16px;
+  color: #888;
+}
+
+.page-padding {
+  padding: var(--spacing-lg);
+}
+
+/* small spacing utilities */
+.mt-sm { margin-top: 8px; }
+.mt-md { margin-top: 16px; }

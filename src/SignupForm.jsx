@@ -13,7 +13,7 @@ const PasswordRequirements = ({ password }) => {
   };
 
   return (
-    <div style={{ marginTop: 8, fontSize: 12, color: '#555' }}>
+    <div className="password-requirements">
       <div>{checks.length ? '✓' : '✗'} 8자리 이상</div>
       <div>{checks.number ? '✓' : '✗'} 숫자 포함</div>
       <div>{checks.case ? '✓' : '✗'} 영문 대소문자 포함</div>
@@ -85,49 +85,47 @@ export default function SignupForm({ onSignup }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="card" style={{ maxWidth: 400, margin: '40px auto', padding: 32 }}>
+    <form onSubmit={handleSubmit} className="card form-card">
       <h2 className="section-title">회원가입</h2>
-      <input type="text" placeholder="이름" value={name} onChange={e => setName(e.target.value)} required style={{ width: '100%', marginBottom: 16, padding: 8 }} />
-      <input type="email" placeholder="이메일" value={email} onChange={e => setEmail(e.target.value)} required style={{ width: '100%', marginBottom: 16, padding: 8 }} />
-      <div style={{ position: 'relative', width: '100%', marginBottom: 16 }}>
+      <input className="form-input" type="text" placeholder="이름" value={name} onChange={e => setName(e.target.value)} required />
+      <input className="form-input" type="email" placeholder="이메일" value={email} onChange={e => setEmail(e.target.value)} required />
+      <div className="input-wrapper">
         <input
+          className="form-input input-with-icon"
           type={showPassword ? 'text' : 'password'}
           placeholder="비밀번호"
           value={password}
           onChange={e => setPassword(e.target.value)}
           onFocus={() => setPasswordFocused(true)}
           required
-          style={{ width: '100%', padding: 8, paddingRight: 40 }}
         />
-        <span onClick={() => setShowPassword(!showPassword)} style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', cursor: 'pointer' }}>
+        <span onClick={() => setShowPassword(!showPassword)} className="icon-right">
           {showPassword ? '🙈' : '👁️'}
         </span>
       </div>
       {passwordFocused && (
         <>
-          <PasswordRequirements password={password} />
-          <div style={{ position: 'relative', width: '100%', marginBottom: 16, marginTop: 8 }}>
+          <PasswordRequirements password={password} className="password-requirements" />
+          <div className="input-wrapper mt-sm">
             <input
+              className="form-input input-with-icon"
               type={showPassword ? 'text' : 'password'}
               placeholder="비밀번호 확인"
               value={passwordConfirm}
               onChange={e => setPasswordConfirm(e.target.value)}
               required
-              style={{ width: '100%', padding: 8, paddingRight: 40 }}
             />
-            <span onClick={() => setShowPassword(!showPassword)} style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', cursor: 'pointer' }}>
+            <span onClick={() => setShowPassword(!showPassword)} className="icon-right">
               {showPassword ? '🙈' : '👁️'}
             </span>
           </div>
         </>
       )}
       {passwordConfirm && !passwordsMatch && (
-        <div style={{ color: 'red', fontSize: 12, marginTop: -8, marginBottom: 8 }}>
-          비밀번호가 일치하지 않습니다.
-        </div>
+        <div className="form-error-small">비밀번호가 일치하지 않습니다.</div>
       )}
-      <button className="button button-strong" type="submit" disabled={loading || !passwordsMatch} style={{ width: '100%', marginTop: 16 }}>회원가입</button>
-      {error && <div style={{ color: 'red', marginTop: 12 }}>{error}</div>}
+  <button className="button button-strong full-width-button mt-md" type="submit" disabled={loading || !passwordsMatch}>회원가입</button>
+      {error && <div className="form-error">{error}</div>}
     </form>
   );
 }
