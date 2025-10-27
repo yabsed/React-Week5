@@ -91,6 +91,23 @@
   background-color: #f8f9fa;
 }
 
+/* 변경된 필터 강조 스타일 */
+.filter-dropdown-toggle.changed {
+  background-color: #4338ca;
+  color: #ffffff;
+  border-color: #4338ca;
+  font-weight: 600;
+}
+
+.filter-dropdown-toggle.changed:hover {
+  background-color: #3730a3;
+  border-color: #3730a3;
+}
+
+.filter-dropdown-toggle.changed .arrow {
+  color: #ffffff;
+}
+
 .filter-dropdown-toggle .arrow {
   font-size: 0.7rem;
   color: #6c757d;

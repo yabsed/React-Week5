@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { JOB_CATEGORIES } from '../components/JobFilter';
 
@@ -10,30 +10,70 @@ export function useJobFilter() {
   const [searchParams, setSearchParams] = useSearchParams();
   
   const [selectedRoles, setSelectedRoles] = useState(() => {
-    // URL에서 roles 파라미터 읽기
-    return searchParams.getAll('roles');
+    // URL 우선, 없으면 localStorage에서 읽기
+    const urlRoles = searchParams.getAll('roles');
+    if (urlRoles.length > 0) return urlRoles;
+    
+    const stored = localStorage.getItem('filterState');
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      return parsed.selectedRoles || [];
+    }
+    return [];
   });
   
   const [selectedDomains, setSelectedDomains] = useState(() => {
-    // URL에서 domains 파라미터 읽기
-    return searchParams.getAll('domains');
+    // URL 우선, 없으면 localStorage에서 읽기
+    const urlDomains = searchParams.getAll('domains');
+    if (urlDomains.length > 0) return urlDomains;
+    
+    const stored = localStorage.getItem('filterState');
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      return parsed.selectedDomains || [];
+    }
+    return [];
   });
   
   const [isActive, setIsActive] = useState(() => {
-    // URL에서 isActive 파라미터 읽기
-    const param = searchParams.get('isActive');
-    if (param === 'true') return true;
-    if (param === 'false') return false;
+    // URL 우선, 없으면 localStorage에서 읽기
+    const urlParam = searchParams.get('isActive');
+    if (urlParam === 'true') return true;
+    if (urlParam === 'false') return false;
+    
+    const stored = localStorage.getItem('filterState');
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      return parsed.isActive !== undefined ? parsed.isActive : null;
+    }
     return null; // 전체
   });
   
   const [order, setOrder] = useState(() => {
-    // URL에서 order 파라미터 읽기
-    const param = searchParams.get('order');
-    return param ? parseInt(param, 10) : 0;
+    // URL 우선, 없으면 localStorage에서 읽기
+    const urlParam = searchParams.get('order');
+    if (urlParam) return parseInt(urlParam, 10);
+    
+    const stored = localStorage.getItem('filterState');
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      return parsed.order !== undefined ? parsed.order : 0;
+    }
+    return 0;
   });
   
   const [isFilterOpen, setIsFilterOpen] = useState(true);
+
+  // 필터 상태를 localStorage에 저장
+  useEffect(() => {
+    const filterState = {
+      selectedRoles,
+      selectedDomains,
+      isActive,
+      order
+    };
+    localStorage.setItem('filterState', JSON.stringify(filterState));
+  }, [selectedRoles, selectedDomains, isActive, order]);
 
   // URL 파라미터 업데이트
   const updateSearchParams = (roles, domains, activeState, orderValue) => {
@@ -148,12 +188,20 @@ export function useJobFilter() {
     setSearchParams(params);
   };
 
+  // 각 필터가 기본값에서 변경되었는지 확인
+  const isStatusChanged = isActive !== null;
+  const isDomainsChanged = selectedDomains.length > 0;
+  const isSortChanged = order !== 0;
+
   return {
     selectedRoles,
     selectedDomains,
     isActive,
     order,
     isFilterOpen,
+    isStatusChanged,
+    isDomainsChanged,
+    isSortChanged,
     handleRoleToggle,
     handleCategoryAllToggle,
     handleDomainToggle,

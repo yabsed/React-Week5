@@ -34,6 +34,9 @@ function PostList() {
     isActive,
     order,
     isFilterOpen,
+    isStatusChanged,
+    isDomainsChanged,
+    isSortChanged,
     handleRoleToggle,
     handleCategoryAllToggle,
     handleDomainToggle,
@@ -129,6 +132,9 @@ function PostList() {
             order={order}
             onOrderChange={handleOrderChange}
             onResetFilters={handleResetFilters}
+            isStatusChanged={isStatusChanged}
+            isDomainsChanged={isDomainsChanged}
+            isSortChanged={isSortChanged}
           />
 
           <div className="post-list-grid">

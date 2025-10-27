@@ -11,7 +11,10 @@ function TopFilters({
   onIsActiveChange,
   order,
   onOrderChange,
-  onResetFilters
+  onResetFilters,
+  isStatusChanged,
+  isDomainsChanged,
+  isSortChanged
 }) {
   const [isStatusOpen, setIsStatusOpen] = useState(false);
   const [isDomainOpen, setIsDomainOpen] = useState(false);
@@ -66,7 +69,7 @@ function TopFilters({
         {/* 모집 상태 드롭다운 */}
         <div className="filter-dropdown">
           <button 
-            className="filter-dropdown-toggle"
+            className={`filter-dropdown-toggle ${isStatusChanged ? 'changed' : ''}`}
             onClick={() => {
               setIsStatusOpen(!isStatusOpen);
               setIsDomainOpen(false);
@@ -110,7 +113,7 @@ function TopFilters({
         {/* 도메인 드롭다운 */}
         <div className="filter-dropdown">
           <button 
-            className="filter-dropdown-toggle"
+            className={`filter-dropdown-toggle ${isDomainsChanged ? 'changed' : ''}`}
             onClick={() => {
               setIsDomainOpen(!isDomainOpen);
               setIsStatusOpen(false);
@@ -152,7 +155,7 @@ function TopFilters({
         {/* 정렬 드롭다운 */}
         <div className="filter-dropdown">
           <button 
-            className="filter-dropdown-toggle"
+            className={`filter-dropdown-toggle ${isSortChanged ? 'changed' : ''}`}
             onClick={() => {
               setIsSortOpen(!isSortOpen);
               setIsStatusOpen(false);
