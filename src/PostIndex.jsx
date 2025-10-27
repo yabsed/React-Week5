@@ -76,13 +76,6 @@ function PostCard({ post }) {
   return (
     // Link 컴포넌트로 카드 전체를 감싸 클릭 가능하게 만듭니다.
     <Link to={postDetailUrl} className="post-card">
-      <div className="card-image-wrapper">
-        <img 
-          src={imageUrl} 
-          alt={`${post.companyName} 로고`} 
-          className="card-image"
-        />
-      </div>
       <div className="card-content">
         <h3 className="card-position-title">{post.positionTitle}</h3>
         <p className="card-company-name">{post.companyName}</p>
