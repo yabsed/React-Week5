@@ -36,16 +36,37 @@
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
-
-.card-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* 이미지가 비율을 유지하며 꽉 차게 */
-}
-
 /* 카드 하단 텍스트 컨텐츠 */
 .card-content {
   padding: 16px;
+}
+
+/* 프로필 이미지와 회사명을 담는 헤더 */
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.profile-image-wrapper {
+  flex-shrink: 0;
+}
+
+.profile-image {
+  width: 48px;
+  height: 48px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+/* 이미지가 없을 경우 표시할 네모난 박스 */
+.profile-image-placeholder {
+  width: 48px;
+  height: 48px;
+  border-radius: 4px;
+  background-color: #e0e0e0;
+  border: 1px solid #d0d0d0;
 }
 
 .card-position-title {
