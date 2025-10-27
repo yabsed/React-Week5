@@ -10,12 +10,171 @@
   margin-bottom: 24px;
 }
 
+/* 컨텐츠 래퍼 - 큰 화면에서는 사이드바 레이아웃 */
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+@media (min-width: 1024px) {
+  .content-wrapper {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+/* 직무 필터 사이드바 */
+.job-filter-sidebar {
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .job-filter-sidebar {
+    width: 320px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 20px;
+  }
+}
+
+/* 필터 토글 버튼 */
+.filter-toggle {
+  width: 100%;
+  padding: 16px 20px;
+  background-color: #f1f3f5;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #212529;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+/* 큰 화면에서는 토글 버튼 숨김 */
+@media (min-width: 1024px) {
+  .filter-toggle {
+    display: none;
+  }
+}
+
+.filter-toggle:hover {
+  background-color: #e9ecef;
+}
+
+.filter-toggle .arrow {
+  transition: transform 0.3s ease;
+  font-size: 0.8rem;
+}
+
+.filter-toggle .arrow.open {
+  transform: rotate(180deg);
+}
+
+/* 필터 컨텐츠 */
+.job-filter-content {
+  margin-top: 16px;
+  padding: 24px;
+  background-color: #ffffff;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  display: none;
+}
+
+/* 모바일에서 열렸을 때만 표시 */
+.job-filter-content.open {
+  display: block;
+}
+
+/* 큰 화면에서는 항상 표시 */
+@media (min-width: 1024px) {
+  .job-filter-content {
+    display: block;
+    margin-top: 0;
+  }
+}
+
+.job-filter-content h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #212529;
+  margin: 0 0 24px 0;
+}
+
+/* 필터 카테고리 */
+.filter-category {
+  margin-bottom: 24px;
+}
+
+.filter-category:last-child {
+  margin-bottom: 0;
+}
+
+.filter-category h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #212529;
+  margin: 0 0 12px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* 필터 옵션들 */
+.filter-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-left: 8px;
+}
+
+/* 체크박스 스타일 */
+.filter-checkbox {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 6px 0;
+  transition: color 0.2s ease;
+}
+
+.filter-checkbox:hover {
+  color: #4338ca;
+}
+
+.filter-checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
+  cursor: pointer;
+  accent-color: #4338ca;
+}
+
+.filter-checkbox span {
+  font-size: 0.9rem;
+  color: #495057;
+  user-select: none;
+}
+
+.filter-checkbox:hover span {
+  color: #212529;
+}
+
 /* 카드 그리드 레이아웃 */
 .post-list-grid {
   display: grid;
   /* 화면 크기에 따라 1~4개 카드를 유연하게 표시 */
   grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
   gap: 24px; /* 카드 사이의 간격 */
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .post-list-grid {
+    flex: 1;
+  }
 }
 
 /* 개별 포스트 카드 */
