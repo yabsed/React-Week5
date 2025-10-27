@@ -23,7 +23,8 @@ function PostList() {
     handleDomainToggle,
     handleIsActiveChange,
     handleOrderChange,
-    handleToggleFilter
+    handleToggleFilter,
+    handleResetFilters
   } = useJobFilter();
 
   // 포스트 데이터 가져오기
@@ -61,6 +62,7 @@ function PostList() {
             onIsActiveChange={handleIsActiveChange}
             order={order}
             onOrderChange={handleOrderChange}
+            onResetFilters={handleResetFilters}
           />
 
           <div className="post-list-grid">

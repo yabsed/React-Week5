@@ -113,6 +113,19 @@ export function useJobFilter() {
     setIsFilterOpen(prev => !prev);
   };
 
+  // 전체 초기화 핸들러 (모집상태, 도메인, 정렬만 초기화, 직군은 유지)
+  const handleResetFilters = () => {
+    // 모든 도메인 선택 해제
+    setSelectedDomains([]);
+    // 모집상태를 전체로
+    setIsActive(null);
+    // 정렬을 최신순으로
+    setOrder(0);
+    
+    // URL 업데이트 (roles는 유지)
+    updateSearchParams(selectedRoles, [], null, 0);
+  };
+
   return {
     selectedRoles,
     selectedDomains,
@@ -124,6 +137,7 @@ export function useJobFilter() {
     handleDomainToggle,
     handleIsActiveChange,
     handleOrderChange,
-    handleToggleFilter
+    handleToggleFilter,
+    handleResetFilters
   };
 }

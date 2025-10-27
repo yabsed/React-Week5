@@ -36,6 +36,33 @@
   gap: 12px;
   margin-bottom: 24px;
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.top-filters-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* 전체 초기화 버튼 */
+.btn-reset-all {
+  padding: 10px 20px;
+  background-color: #ffffff;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  color: #6c757d;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.btn-reset-all:hover {
+  background-color: #f8f9fa;
+  border-color: #adb5bd;
+  color: #495057;
 }
 
 /* 필터 드롭다운 */
