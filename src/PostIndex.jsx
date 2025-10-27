@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./styles/common.css"; // 공통 CSS
 import "./styles/postlist.css"; // 이 컴포넌트 전용 CSS
 import PostCard from "./components/PostCard";
@@ -11,6 +11,7 @@ import { useJobFilter } from "./hooks/useJobFilter";
  * 포스트 목록을 불러와서 그리드 형태로 보여주는 컴포넌트
  */
 function PostList() {
+  const [page, setPage] = useState(1);
   // 직무 필터 관련 상태와 핸들러
   const {
     selectedRoles,
@@ -28,7 +29,7 @@ function PostList() {
   } = useJobFilter();
 
   // 포스트 데이터 가져오기
-  const { posts, loading, error } = usePosts(selectedRoles, selectedDomains, isActive, order);
+  const { posts, paginator, loading, error } = usePosts(selectedRoles, selectedDomains, isActive, order, page);
 
   // --- 상태별 렌더링 ---
   if (loading) {
@@ -37,6 +38,26 @@ function PostList() {
 
   if (error) {
     return <div className="error-message">{error}</div>;
+  }
+
+  const renderPagination = () => {
+    if (!paginator || paginator.lastPage <= 1) {
+      return null;
+    }
+
+    const pages = [];
+    for (let i = 0; i < paginator.lastPage; i++) {
+      pages.push(
+        <button
+          key={i}
+          onClick={() => setPage(i)}
+          className={page === i ? "active" : ""}
+        >
+          {i}
+        </button>
+      );
+    }
+    return <div className="pagination">{pages}</div>;
   }
 
   return (
@@ -71,6 +92,7 @@ function PostList() {
               <PostCard key={post.id} post={post} />
             ))}
           </div>
+          {renderPagination()}
         </div>
       </div>
     </div>

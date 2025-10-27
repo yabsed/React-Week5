@@ -10,8 +10,9 @@ const BASE_URL = 'https://api-internhasha.wafflestudio.com';
  * @param {number} order - 정렬 방식 (0: 최신순, 1: 마감순)
  * @returns {Object} { posts, loading, error }
  */
-export function usePosts(selectedRoles, selectedDomains, isActive, order) {
+export function usePosts(selectedRoles, selectedDomains, isActive, order, page) {
   const [posts, setPosts] = useState([]);
+  const [paginator, setPaginator] = useState({ lastPage: 1 });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -33,6 +34,9 @@ export function usePosts(selectedRoles, selectedDomains, isActive, order) {
     
     // order 추가
     params.set('order', order.toString());
+
+    // page 추가
+    params.set('page', page.toString());
     
     const queryString = params.toString();
     if (queryString) {
@@ -52,6 +56,7 @@ export function usePosts(selectedRoles, selectedDomains, isActive, order) {
       })
       .then(data => {
         setPosts(data.posts); // JSON 응답의 'posts' 배열을 상태에 저장
+        setPaginator(data.paginator);
       })
       .catch(err => {
         setError(err.message);
@@ -59,7 +64,7 @@ export function usePosts(selectedRoles, selectedDomains, isActive, order) {
       .finally(() => {
         setLoading(false);
       });
-  }, [selectedRoles, selectedDomains, isActive, order]); // 의존성 배열에 모든 필터 추가
+  }, [selectedRoles, selectedDomains, isActive, order, page]); // 의존성 배열에 모든 필터 추가
 
-  return { posts, loading, error };
+  return { posts, paginator, loading, error };
 }
