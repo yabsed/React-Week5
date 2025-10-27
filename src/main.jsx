@@ -2,7 +2,7 @@
 import { StrictMode, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import AuthNav from './AuthNav.jsx';
-import MainBody from './PostBody.jsx';
+import PostBody from './PostBody.jsx';
 import LoginForm from './LoginForm.jsx';
 import SignupForm from './SignupForm.jsx';
 import ProfileInfo from './ProfileInfo.jsx';
@@ -34,7 +34,7 @@ function AppLayout() {
     <div>
       <AuthNav isLoggedIn={isLoggedIn} onLogout={handleLogout} />
       <Routes>
-        <Route path="/React-Week5/:id" element={<MainBody/>}/>
+        <Route path="/React-Week5/:id" element={<PostBody/>}/>
         <Route path="/React-Week5/login" element={<LoginForm onLogin={handleLogin} />} />
         <Route path="/React-Week5/signup" element={<SignupForm onSignup={handleSignup} />} />
         <Route path="/React-Week5/profile" element={isLoggedIn ? <ProfileInfo /> : <div className="page-padding"><h2>로그인이 필요합니다</h2></div>} />
