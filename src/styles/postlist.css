@@ -441,10 +441,41 @@
   align-items: center;
   gap: 12px;
   margin-bottom: 12px;
+  position: relative;
 }
 
 .profile-image-wrapper {
   flex-shrink: 0;
+}
+
+/* 북마크 버튼 스타일 */
+.bookmark-button {
+  margin-left: auto;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  color: #d0d0d0;
+  transition: all 0.2s ease;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bookmark-button:hover {
+  color: #fbbf24;
+  transform: scale(1.1);
+}
+
+.bookmark-button.bookmarked {
+  color: #fbbf24;
+}
+
+.bookmark-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .profile-image {

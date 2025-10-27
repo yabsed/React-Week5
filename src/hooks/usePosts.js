@@ -46,8 +46,20 @@ export function usePosts(selectedRoles, selectedDomains, isActive, order, page) 
     setLoading(true);
     setError(null);
     
+    // 로그인 토큰 가져오기
+    const token = localStorage.getItem('token');
+    
     // API로부터 포스트 목록을 불러옵니다.
-    fetch(apiUrl)
+    const headers = {
+      'Content-Type': 'application/json'
+    };
+    
+    // 토큰이 있으면 헤더에 추가
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+    
+    fetch(apiUrl, { headers })
       .then(res => {
         if (!res.ok) {
           throw new Error('데이터를 불러오는 데 실패했습니다.');
