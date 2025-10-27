@@ -14,28 +14,56 @@ export function useJobFilter() {
     return searchParams.getAll('roles');
   });
   
+  const [selectedDomains, setSelectedDomains] = useState(() => {
+    // URL에서 domains 파라미터 읽기
+    return searchParams.getAll('domains');
+  });
+  
+  const [isActive, setIsActive] = useState(() => {
+    // URL에서 isActive 파라미터 읽기
+    const param = searchParams.get('isActive');
+    if (param === 'true') return true;
+    if (param === 'false') return false;
+    return null; // 전체
+  });
+  
+  const [order, setOrder] = useState(() => {
+    // URL에서 order 파라미터 읽기
+    const param = searchParams.get('order');
+    return param ? parseInt(param, 10) : 0;
+  });
+  
   const [isFilterOpen, setIsFilterOpen] = useState(true);
 
   // URL 파라미터 업데이트
-  const updateSearchParams = (roles) => {
+  const updateSearchParams = (roles, domains, activeState, orderValue) => {
     const params = new URLSearchParams();
+    
+    // roles 추가
     roles.forEach(role => params.append('roles', role));
+    
+    // domains 추가
+    domains.forEach(domain => params.append('domains', domain));
+    
+    // isActive 추가 (null이 아닐 때만)
+    if (activeState !== null) {
+      params.set('isActive', activeState.toString());
+    }
+    
+    // order 추가
+    params.set('order', orderValue.toString());
+    
     setSearchParams(params);
   };
 
   // 역할 선택/해제 핸들러
   const handleRoleToggle = (role) => {
     setSelectedRoles(prev => {
-      let newRoles;
-      if (prev.includes(role)) {
-        // 이미 선택된 경우 제거
-        newRoles = prev.filter(r => r !== role);
-      } else {
-        // 선택되지 않은 경우 추가
-        newRoles = [...prev, role];
-      }
-      // URL 업데이트
-      updateSearchParams(newRoles);
+      const newRoles = prev.includes(role) 
+        ? prev.filter(r => r !== role)
+        : [...prev, role];
+      
+      updateSearchParams(newRoles, selectedDomains, isActive, order);
       return newRoles;
     });
   };
@@ -47,18 +75,37 @@ export function useJobFilter() {
     const allSelected = categoryRoleValues.every(role => selectedRoles.includes(role));
     
     setSelectedRoles(prev => {
-      let newRoles;
-      if (allSelected) {
-        // 모두 선택된 경우 해당 카테고리 roles 모두 제거
-        newRoles = prev.filter(role => !categoryRoleValues.includes(role));
-      } else {
-        // 일부만 선택되거나 선택되지 않은 경우 해당 카테고리 roles 모두 추가
-        const otherRoles = prev.filter(role => !categoryRoleValues.includes(role));
-        newRoles = [...otherRoles, ...categoryRoleValues];
-      }
-      updateSearchParams(newRoles);
+      const newRoles = allSelected
+        ? prev.filter(role => !categoryRoleValues.includes(role))
+        : [...prev.filter(role => !categoryRoleValues.includes(role)), ...categoryRoleValues];
+      
+      updateSearchParams(newRoles, selectedDomains, isActive, order);
       return newRoles;
     });
+  };
+
+  // 도메인 선택/해제 핸들러
+  const handleDomainToggle = (domain) => {
+    setSelectedDomains(prev => {
+      const newDomains = prev.includes(domain)
+        ? prev.filter(d => d !== domain)
+        : [...prev, domain];
+      
+      updateSearchParams(selectedRoles, newDomains, isActive, order);
+      return newDomains;
+    });
+  };
+
+  // 모집 상태 변경 핸들러
+  const handleIsActiveChange = (value) => {
+    setIsActive(value);
+    updateSearchParams(selectedRoles, selectedDomains, value, order);
+  };
+
+  // 정렬 변경 핸들러
+  const handleOrderChange = (value) => {
+    setOrder(value);
+    updateSearchParams(selectedRoles, selectedDomains, isActive, value);
   };
 
   // 필터 토글 핸들러
@@ -68,9 +115,15 @@ export function useJobFilter() {
 
   return {
     selectedRoles,
+    selectedDomains,
+    isActive,
+    order,
     isFilterOpen,
     handleRoleToggle,
     handleCategoryAllToggle,
+    handleDomainToggle,
+    handleIsActiveChange,
+    handleOrderChange,
     handleToggleFilter
   };
 }

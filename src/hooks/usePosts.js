@@ -5,19 +5,38 @@ const BASE_URL = 'https://api-internhasha.wafflestudio.com';
 /**
  * 포스트 데이터를 가져오는 커스텀 훅
  * @param {Array} selectedRoles - 선택된 역할 배열
+ * @param {Array} selectedDomains - 선택된 도메인 배열
+ * @param {boolean|null} isActive - 모집 상태 (true: 모집중만, null: 전체)
+ * @param {number} order - 정렬 방식 (0: 최신순, 1: 마감순)
  * @returns {Object} { posts, loading, error }
  */
-export function usePosts(selectedRoles) {
+export function usePosts(selectedRoles, selectedDomains, isActive, order) {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // 선택된 roles를 기반으로 API URL 구성
+    // API URL 구성
     let apiUrl = `${BASE_URL}/api/post`;
-    if (selectedRoles.length > 0) {
-      const rolesQuery = selectedRoles.map(role => `roles=${role}`).join('&');
-      apiUrl += `?${rolesQuery}`;
+    const params = new URLSearchParams();
+    
+    // roles 추가
+    selectedRoles.forEach(role => params.append('roles', role));
+    
+    // domains 추가
+    selectedDomains.forEach(domain => params.append('domains', domain));
+    
+    // isActive 추가 (null이 아닐 때만)
+    if (isActive !== null) {
+      params.set('isActive', isActive.toString());
+    }
+    
+    // order 추가
+    params.set('order', order.toString());
+    
+    const queryString = params.toString();
+    if (queryString) {
+      apiUrl += `?${queryString}`;
     }
 
     setLoading(true);
@@ -40,7 +59,7 @@ export function usePosts(selectedRoles) {
       .finally(() => {
         setLoading(false);
       });
-  }, [selectedRoles]); // selectedRoles가 변경될 때마다 재실행
+  }, [selectedRoles, selectedDomains, isActive, order]); // 의존성 배열에 모든 필터 추가
 
   return { posts, loading, error };
 }

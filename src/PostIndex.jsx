@@ -3,6 +3,7 @@ import "./styles/common.css"; // 공통 CSS
 import "./styles/postlist.css"; // 이 컴포넌트 전용 CSS
 import PostCard from "./components/PostCard";
 import JobFilter from "./components/JobFilter";
+import TopFilters from "./components/TopFilters";
 import { usePosts } from "./hooks/usePosts";
 import { useJobFilter } from "./hooks/useJobFilter";
 
@@ -13,14 +14,20 @@ function PostList() {
   // 직무 필터 관련 상태와 핸들러
   const {
     selectedRoles,
+    selectedDomains,
+    isActive,
+    order,
     isFilterOpen,
     handleRoleToggle,
     handleCategoryAllToggle,
+    handleDomainToggle,
+    handleIsActiveChange,
+    handleOrderChange,
     handleToggleFilter
   } = useJobFilter();
 
   // 포스트 데이터 가져오기
-  const { posts, loading, error } = usePosts(selectedRoles);
+  const { posts, loading, error } = usePosts(selectedRoles, selectedDomains, isActive, order);
 
   // --- 상태별 렌더링 ---
   if (loading) {
@@ -36,7 +43,7 @@ function PostList() {
       <h1>채용 공고</h1>
       
       <div className="content-wrapper">
-        {/* 직무 필터 */}
+        {/* 직군 필터 (사이드바) */}
         <JobFilter
           selectedRoles={selectedRoles}
           onRoleToggle={handleRoleToggle}
@@ -45,11 +52,23 @@ function PostList() {
           onToggleFilter={handleToggleFilter}
         />
 
-        <div className="post-list-grid">
-          {/* 불러온 posts 배열을 순회하며 PostCard를 렌더링 */}
-          {posts.map(post => (
-            <PostCard key={post.id} post={post} />
-          ))}
+        <div className="main-content">
+          {/* 상단 필터 (모집상태, 업종, 정렬) */}
+          <TopFilters
+            selectedDomains={selectedDomains}
+            onDomainToggle={handleDomainToggle}
+            isActive={isActive}
+            onIsActiveChange={handleIsActiveChange}
+            order={order}
+            onOrderChange={handleOrderChange}
+          />
+
+          <div className="post-list-grid">
+            {/* 불러온 posts 배열을 순회하며 PostCard를 렌더링 */}
+            {posts.map(post => (
+              <PostCard key={post.id} post={post} />
+            ))}
+          </div>
         </div>
       </div>
     </div>

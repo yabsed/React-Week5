@@ -32,18 +32,26 @@ export const JOB_CATEGORIES = {
   },
 };
 
+// 도메인 목록
+export const DOMAINS = [
+  { value: 'FINTECH', label: '핀테크' },
+  { value: 'HEALTHTECH', label: '헬스테크' },
+  { value: 'EDUCATION', label: '교육' },
+  { value: 'ECOMMERCE', label: '이커머스' },
+  { value: 'FOODTECH', label: '푸드테크' },
+  { value: 'MOBILITY', label: '모빌리티' },
+  { value: 'CONTENTS', label: '콘텐츠' },
+  { value: 'B2B', label: 'B2B' },
+  { value: 'OTHERS', label: '기타' }
+];
+
 /**
- * 직무 필터 컴포넌트
- * @param {Array} selectedRoles - 선택된 역할 배열
- * @param {Function} onRoleToggle - 역할 선택/해제 핸들러
- * @param {Function} onCategoryAllToggle - 카테고리 전체 선택/해제 핸들러
- * @param {boolean} isFilterOpen - 필터 열림/닫힘 상태
- * @param {Function} onToggleFilter - 필터 토글 핸들러
+ * 직무 필터 컴포넌트 (사이드바)
  */
 function JobFilter({ 
   selectedRoles, 
   onRoleToggle, 
-  onCategoryAllToggle, 
+  onCategoryAllToggle,
   isFilterOpen, 
   onToggleFilter 
 }) {
@@ -55,35 +63,38 @@ function JobFilter({
       </button>
       
       <div className={`job-filter-content ${isFilterOpen ? 'open' : ''}`}>
-        <h2>직무 유형 선택</h2>
-        
-        {Object.entries(JOB_CATEGORIES).map(([categoryKey, category]) => (
-          <div key={categoryKey} className="filter-category">
-            <h3>{category.label}</h3>
-            
-            <div className="filter-options">
-              <label className="filter-checkbox">
-                <input
-                  type="checkbox"
-                  checked={category.roles.every(r => selectedRoles.includes(r.value))}
-                  onChange={() => onCategoryAllToggle(categoryKey)}
-                />
-                <span>전체 선택</span>
-              </label>
+        {/* 직무 유형 필터 */}
+        <div className="filter-section">
+          <h2>직무 유형 선택</h2>
+          
+          {Object.entries(JOB_CATEGORIES).map(([categoryKey, category]) => (
+            <div key={categoryKey} className="filter-category">
+              <h3>{category.label}</h3>
               
-              {category.roles.map(role => (
-                <label key={role.value} className="filter-checkbox">
+              <div className="filter-options">
+                <label className="filter-checkbox">
                   <input
                     type="checkbox"
-                    checked={selectedRoles.includes(role.value)}
-                    onChange={() => onRoleToggle(role.value)}
+                    checked={category.roles.every(r => selectedRoles.includes(r.value))}
+                    onChange={() => onCategoryAllToggle(categoryKey)}
                   />
-                  <span>{role.label}</span>
+                  <span>전체 선택</span>
                 </label>
-              ))}
+                
+                {category.roles.map(role => (
+                  <label key={role.value} className="filter-checkbox">
+                    <input
+                      type="checkbox"
+                      checked={selectedRoles.includes(role.value)}
+                      onChange={() => onRoleToggle(role.value)}
+                    />
+                    <span>{role.label}</span>
+                  </label>
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </aside>
   );
