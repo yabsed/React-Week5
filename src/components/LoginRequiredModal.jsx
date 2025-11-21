@@ -11,7 +11,7 @@ function LoginRequiredModal({ isOpen, onClose }) {
   if (!isOpen) return null;
 
   const handleLoginClick = () => {
-    navigate('/React-Week5/login');
+    navigate('/login');
   };
 
   const handleClose = () => {

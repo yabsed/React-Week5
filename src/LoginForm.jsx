@@ -24,7 +24,7 @@ export default function LoginForm({ onLogin }) {
       const data = await res.json();
       localStorage.setItem('token', data.token);
       onLogin && onLogin();
-      navigate('/React-Week5');
+      navigate('/');
     } catch (err) {
       setError('이메일 또는 비밀번호가 올바르지 않습니다.');
     } finally {

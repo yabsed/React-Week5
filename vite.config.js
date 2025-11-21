@@ -9,5 +9,5 @@ export default defineConfig({
       usePolling: true,
     },
   },
-  base: '/React-Week5/'
+  // base: '/React-Week5/' // Use this for GitHub Pages, remove for Vercel
 })

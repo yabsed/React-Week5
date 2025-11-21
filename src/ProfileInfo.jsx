@@ -383,7 +383,7 @@ export default function ProfileInfo({ editMode = false }) {
 
       await fetchProfile();
       setIsEditing(false);
-      navigate('/React-Week5/mypage');
+      navigate('/mypage');
     } catch (err) {
       alert(err.message);
     } finally {
@@ -427,7 +427,7 @@ export default function ProfileInfo({ editMode = false }) {
 
   const goBack = () => {
     setIsEditing(false);
-    navigate('/React-Week5/mypage');
+    navigate('/mypage');
   };
 
   // 마감 상태 계산
@@ -677,7 +677,7 @@ export default function ProfileInfo({ editMode = false }) {
             {bookmarks.length === 0 ? (
               <div className="empty-state">
                 <p>북마크한 공고가 없습니다.</p>
-                <Link to="/React-Week5" className="button button-strong">공고 둘러보기</Link>
+                <Link to="/" className="button button-strong">공고 둘러보기</Link>
               </div>
             ) : (
               <div className="bookmarks-list">
