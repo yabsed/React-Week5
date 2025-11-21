@@ -67,7 +67,7 @@ export default function SignupForm({ onSignup }) {
         const data = await res.json();
         localStorage.setItem('token', data.token);
         onSignup && onSignup();
-        navigate('/React-Week5/profile');
+        navigate('/React-Week5');
       } else {
         const errorData = await res.json();
         if (errorData.details) {

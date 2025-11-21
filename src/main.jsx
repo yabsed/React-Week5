@@ -22,12 +22,12 @@ function AppLayout() {
 
   const handleLogin = () => {
     setIsLoggedIn(true);
-    navigate('/React-Week5/profile');
+    navigate('/React-Week5');
   };
 
   const handleSignup = () => {
     setIsLoggedIn(true);
-    navigate('/React-Week5/profile');
+    navigate('/React-Week5');
   };
 
   return (
