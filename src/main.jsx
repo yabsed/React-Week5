@@ -38,7 +38,8 @@ function AppLayout() {
         <Route path="/React-Week5/:id" element={<PostBody/>}/>
         <Route path="/React-Week5/login" element={<LoginForm onLogin={handleLogin} />} />
         <Route path="/React-Week5/signup" element={<SignupForm onSignup={handleSignup} />} />
-        <Route path="/React-Week5/profile" element={isLoggedIn ? <ProfileInfo /> : <div className="page-padding"><h2>로그인이 필요합니다</h2></div>} />
+        <Route path="/React-Week5/mypage" element={isLoggedIn ? <ProfileInfo /> : <div className="page-padding"><h2>로그인이 필요합니다</h2></div>} />
+        <Route path="/React-Week5/mypage/edit" element={isLoggedIn ? <ProfileInfo editMode={true} /> : <div className="page-padding"><h2>로그인이 필요합니다</h2></div>} />
       </Routes>
     </div>
   );

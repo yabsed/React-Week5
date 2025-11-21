@@ -26,7 +26,7 @@ function AuthNav({ isLoggedIn, onLogout }) {
           </>
         ) : (
           <>
-            <Link className="button button-strong" to="/React-Week5/profile">내 정보</Link>
+            <Link className="button button-strong" to="/React-Week5/mypage">마이페이지</Link>
             <button className="button button-strong" onClick={onLogout}>로그아웃</button>
           </>
         )}

@@ -1,0 +1,382 @@
+/* 마이페이지 스타일 */
+.mypage-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: var(--spacing-lg);
+}
+
+.mypage-title {
+  font-size: var(--font-size-xxl);
+  color: var(--text-dark);
+  margin-bottom: var(--spacing-lg);
+  font-weight: 700;
+}
+
+/* 탭 네비게이션 */
+.mypage-tabs {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: 0;
+}
+
+.mypage-tab {
+  padding: var(--spacing-md) 0;
+  font-size: var(--font-size-md);
+  font-weight: 500;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-light);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: all 0.2s ease;
+}
+
+.mypage-tab:hover {
+  color: var(--text-dark);
+}
+
+.mypage-tab.active {
+  color: var(--text-dark);
+  border-bottom-color: var(--text-dark);
+  font-weight: 600;
+}
+
+.btn-profile-action {
+  margin-left: auto;
+  padding: 8px 16px;
+  font-size: var(--font-size-sm);
+  background: var(--background-white);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--text-dark);
+  transition: all 0.2s ease;
+}
+
+.btn-profile-action:hover {
+  background: var(--background-light);
+}
+
+/* 콘텐츠 영역 */
+.mypage-content {
+  min-height: 400px;
+}
+
+/* 빈 상태 */
+.empty-state {
+  text-align: center;
+  padding: var(--spacing-xl) var(--spacing-lg);
+  color: var(--text-dark);
+}
+
+.empty-state h3 {
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-sm);
+  font-weight: 600;
+}
+
+.empty-state p {
+  font-size: var(--font-size-md);
+  color: var(--text-light);
+  margin-bottom: var(--spacing-lg);
+}
+
+/* 북마크 리스트 */
+.bookmarks-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.bookmark-item {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: var(--background-white);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  gap: var(--spacing-md);
+}
+
+.bookmark-icon {
+  font-size: 24px;
+  color: var(--text-dark);
+}
+
+.bookmark-company {
+  font-weight: 600;
+  color: var(--text-dark);
+  min-width: 100px;
+}
+
+.bookmark-position {
+  flex: 1;
+  color: var(--text-dark);
+  text-align: right;
+}
+
+.bookmark-deadline {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  min-width: 60px;
+  text-align: right;
+}
+
+.bookmark-deadline.red {
+  color: #dc3545;
+}
+
+.bookmark-deadline.blue {
+  color: #0066cc;
+}
+
+/* 프로필 섹션 */
+.profile-section {
+  max-width: 600px;
+}
+
+.profile-view {
+  padding: var(--spacing-md) 0;
+}
+
+.profile-name {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  margin-bottom: var(--spacing-xs);
+  color: var(--text-dark);
+}
+
+.profile-email {
+  font-size: var(--font-size-md);
+  color: var(--text-light);
+  margin-bottom: var(--spacing-xs);
+}
+
+.profile-detail {
+  font-size: var(--font-size-md);
+  color: var(--text-light);
+}
+
+/* 프로필 폼 */
+.profile-form {
+  padding: var(--spacing-md) 0;
+}
+
+.form-section {
+  margin-bottom: var(--spacing-lg);
+}
+
+.form-section-title {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  margin-bottom: var(--spacing-xs);
+  color: var(--text-dark);
+}
+
+.form-section-desc {
+  font-size: var(--font-size-sm);
+  color: var(--text-light);
+}
+
+.form-group {
+  margin-bottom: var(--spacing-lg);
+}
+
+.form-group label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: var(--spacing-sm);
+  color: var(--text-dark);
+  font-size: var(--font-size-md);
+}
+
+.required {
+  color: #dc3545;
+}
+
+.input-with-suffix {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.input-with-suffix .form-input {
+  flex: 1;
+  max-width: 200px;
+  margin-bottom: 0;
+}
+
+.input-suffix {
+  color: var(--text-light);
+  font-size: var(--font-size-md);
+}
+
+.department-input-row {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+}
+
+.department-input-row .form-input {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.btn-delete {
+  padding: 8px 16px;
+  background: var(--text-dark);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  white-space: nowrap;
+}
+
+.btn-delete:hover {
+  background: #333;
+}
+
+.btn-add {
+  padding: 8px 24px;
+  background: var(--background-light);
+  color: var(--text-dark);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+}
+
+.btn-add:hover {
+  background: var(--border-color);
+}
+
+.btn-add:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* 파일 업로드 */
+.file-upload-area {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--text-light);
+  transition: border-color 0.2s;
+}
+
+.file-upload-area:hover {
+  border-color: var(--text-dark);
+}
+
+.file-upload-icon {
+  font-size: 20px;
+}
+
+.file-uploaded {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+}
+
+.file-name {
+  flex: 1;
+  color: var(--text-dark);
+}
+
+.form-error-text {
+  color: #dc3545;
+  font-size: var(--font-size-sm);
+  margin-top: var(--spacing-xs);
+}
+
+/* 버튼 */
+.form-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-xl);
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 14px;
+  background: var(--text-dark);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-primary:hover {
+  background: #333;
+}
+
+.btn-primary:disabled {
+  background: var(--text-light);
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  width: 100%;
+  padding: 14px;
+  background: var(--background-white);
+  color: var(--text-dark);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: var(--font-size-md);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-secondary:hover {
+  background: var(--background-light);
+}
+
+.btn-primary-large {
+  padding: 14px 32px;
+  background: #00bcd4;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-primary-large:hover {
+  background: #00a5bb;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .mypage-container {
+    padding: var(--spacing-md);
+  }
+
+  .bookmark-item {
+    flex-wrap: wrap;
+  }
+
+  .bookmark-position {
+    text-align: left;
+    width: 100%;
+    order: 3;
+  }
+}
